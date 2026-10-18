@@ -1,18 +1,13 @@
 # Home Link Botswana (prototype)
+Static front end (GitHub Pages) + Supabase (PostgreSQL, Auth, Storage).
 
-Static web prototype for the Home Link system design: home page, login/register, and a separate interface for tenants, providers (landlords/agents) and administrators.
+- `index.html` home, `login.html` log in / register, `app.html` + `app.js` role dashboards (tenant, provider, administrator)
+- `config.js` Supabase URL and publishable key (public by design)
+- `database/schema.sql` full database, security rules and storage buckets (run once in the Supabase SQL Editor)
 
-## Run locally
-Open a terminal in this folder and run `python3 -m http.server 8000`, then visit http://localhost:8000.
+## Make an administrator
+Register on the site, then in Supabase SQL Editor run:
+`update public.users set role = 'admin' where email = 'YOUR_EMAIL';`
 
-## Publish on GitHub Pages
-1. Create a new repository on GitHub (e.g. `home-link`).
-2. Upload all files in this folder (Add file > Upload files), or use git.
-3. Settings > Pages > Source: "Deploy from a branch", branch `main`, folder `/ (root)`.
-4. Your site appears at `https://<your-username>.github.io/home-link/`.
-
-## Demo accounts
-tenant@homelink.test / Tenant123!, provider@homelink.test / Provider123!, agent@homelink.test / Agent123! (unverified), admin@homelink.test / Admin123!
-
-## Important limitation
-Accounts and data are stored in the browser (localStorage), so they are not shared between devices and login is NOT secure. It demonstrates the role-based flows only. For the real system, replace `auth.js` and the storage calls in `app.html` with a backend that implements `home_link_schema.sql` (MySQL), with server-side password hashing, role checks and private storage for verification documents.
+## Notes
+Security is enforced by row-level security in the database, not by the page. Never put the secret/service_role key in these files.

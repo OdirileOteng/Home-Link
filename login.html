@@ -14,8 +14,10 @@
 <div id="rl" hidden><label for="r">I am a</label><select id="r"><option value="tenant">Tenant looking for a home</option><option value="provider">Landlord or agent</option></select></div>
 <div class="err" id="er" role="alert"></div>
 <button class="btn" id="go">Log in</button></div>
-<p class="hint" id="hint">Demo accounts (password in brackets): tenant@homelink.test (Tenant123!), provider@homelink.test (Provider123!), agent@homelink.test (Agent123!, unverified), admin@homelink.test (Admin123!).</p>
+<p class="hint" id="hint">New here? Choose Create account. Administrator accounts are set up by the project owner.</p>
 </div></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
 <script src="auth.js"></script>
 <script>
 let reg=new URLSearchParams(location.search).get("tab")==="register";
