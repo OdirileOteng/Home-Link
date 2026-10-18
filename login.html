@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Log in · Home Link Botswana</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<header><a href="index.html" class="logo" style="color:#fff;text-decoration:none"><i></i>Home Link Botswana</a></header>
+<main class="auth"><div class="panel">
+<div class="tabs"><button class="btn" id="t1">Log in</button><button class="btn alt" id="t2">Create account</button></div>
+<div class="f" id="f">
+<div id="nm" hidden><label for="n">Full name</label><input id="n" autocomplete="name"></div>
+<div><label for="e">Email</label><input id="e" type="email" autocomplete="email"></div>
+<div><label for="p">Password</label><input id="p" type="password" autocomplete="current-password"></div>
+<div id="rl" hidden><label for="r">I am a</label><select id="r"><option value="tenant">Tenant looking for a home</option><option value="provider">Landlord or agent</option></select></div>
+<div class="err" id="er" role="alert"></div>
+<button class="btn" id="go">Log in</button></div>
+<p class="hint" id="hint">Demo accounts (password in brackets): tenant@homelink.test (Tenant123!), provider@homelink.test (Provider123!), agent@homelink.test (Agent123!, unverified), admin@homelink.test (Admin123!).</p>
+</div></main>
+<script src="auth.js"></script>
+<script>
+let reg=new URLSearchParams(location.search).get("tab")==="register";
+const $=i=>document.getElementById(i);
+function mode(){$("nm").hidden=$("rl").hidden=!reg;$("go").textContent=reg?"Create account":"Log in";$("hint").hidden=reg;$("t1").className="btn"+(reg?" alt":"");$("t2").className="btn"+(reg?"":" alt");$("p").autocomplete=reg?"new-password":"current-password";$("er").textContent=""}
+$("t1").onclick=()=>{reg=false;mode()};$("t2").onclick=()=>{reg=true;mode()};
+$("go").onclick=async()=>{
+ $("er").textContent="";
+ if(reg){const m=await A.register($("n").value,$("e").value,$("p").value,$("r").value);if(m)return $("er").textContent=m;}
+ const u=await A.login($("e").value,$("p").value);
+ if(!u)return $("er").textContent="Email or password is incorrect.";
+ location.href="app.html"};
+mode();
+</script></body></html>
